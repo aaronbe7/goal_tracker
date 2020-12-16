@@ -38,6 +38,9 @@ class GoalListDetails(LoginRequiredMixin, DetailView):
 def home(request):
     return render(request, 'main_app/home.html')
 
+def goals_index(request):
+    return render(request, 'goals/index.html')
+
 @login_required
 def user_goals(request, user_id):
     return render(request, 'main_app/user_goals.html')
