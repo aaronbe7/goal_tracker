@@ -42,6 +42,13 @@ def user_goals(request, user_id):
 def add_goal(request, user_id, list_id):
     return render(request, 'main_app/add_goal.html')
 
+def goallist_detail(request, goallist_id):
+    goallist = GoalList.objects.get(id=goallist_id)
+    return render(request, 'goallist/detail.html', {
+        'goallist': goallist
+    })
+
+
 def signup(request):
   error_message = ''
   if request.method == 'POST':
