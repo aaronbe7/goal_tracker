@@ -33,7 +33,7 @@ class Goal(models.Model):
 
 class GoalList(models.Model):
     title = models.CharField(max_length=150)    
-    decription = models.TextField(max_length=250)
+    description = models.TextField(max_length=250)
     category = models.ManyToManyField(Category)
     goal = models.ManyToManyField(Goal)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
