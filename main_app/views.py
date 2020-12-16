@@ -5,9 +5,10 @@ from .models import GoalList
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class CreateList(CreateView):
+class CreateList(LoginRequiredMixin, CreateView):
     model = GoalList
     fields = ['title', 'description', 'category', 'restricted', 'goal']
 
@@ -17,28 +18,30 @@ class CreateList(CreateView):
         # Let the CreateView do its job as usual
         return super().form_valid(form)
 
-class UpdateList(UpdateView):
+class UpdateList(LoginRequiredMixin, UpdateView):
     model = GoalList
     fields = '__all__'
 
-class DeleteList(DeleteView):
+class DeleteList(LoginRequiredMixin, DeleteView):
     model = GoalList
     success_url = '/goals/'
 
-class GoalsList(ListView):
+class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
     print('Placeholder')
 
-class GoalListDetails(DetailView):
+class GoalListDetails(LoginRequiredMixin, DetailView):
     model = GoalList
     print('Placeholder')
 
 def home(request):
     return render(request, 'main_app/home.html')
 
+@login_required
 def user_goals(request, user_id):
     return render(request, 'main_app/user_goals.html')
 
+@login_required
 def add_goal(request, user_id, list_id):
     return render(request, 'main_app/add_goal.html')
 
