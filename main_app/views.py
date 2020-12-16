@@ -44,8 +44,9 @@ def add_goal(request, user_id, list_id):
 
 def goallist_detail(request, goallist_id):
     goallist = GoalList.objects.get(id=goallist_id)
+    goal = Goal.objects.get(id=goal_id)
     return render(request, 'goallist/detail.html', {
-        'goallist': goallist
+        'goallist': goallist, 'goal': goal
     })
 
 
