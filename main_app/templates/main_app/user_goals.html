@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="{% url 'create_goal' %}" class="right">New List</a>
+
+<h1>Your Goals</h1>
+
+{% for list in lists %}
+    <div class="card">
+         <div class="card-content">
+            <h3>List: {{ list.title }}: {{ list.category }}</h3>
+            <h6>Description: {{ list.description }}</h6>
+            <h6>Goal: {{ list.goals }}</h6>
+         </div>
+     </div>
+{% endfor %}
+
+{% endblock %}
