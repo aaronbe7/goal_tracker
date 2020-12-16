@@ -43,8 +43,3 @@ class Category(models.Model):
   def __str__(self):
     # Nice method for obtaining the friendly value of a Field.choice
     return self.title
-
-
-
-
-
