@@ -19,9 +19,14 @@
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Goal Tracker</a></li>
         </ul>
         <ul class="right">
-          <li><a href="{% url 'add_goal' 1 1%}">Add Goal</a></li>
-          <li><a href="{% url 'user_goals' 1 %}">Your Goals</a></li>
-          <li><a href="{% url 'goal_list' %}">Login/Out</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'add_goal' user.id 1 %}">Add Goal</a></li>
+          <li><a href="{% url 'user_goals' user.id %}">Your Goals</a></li>
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
+        {% else %}
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
+        {% endif %}
         </ul>
       </div>
     </nav>
