@@ -32,6 +32,7 @@ class GoalsList(LoginRequiredMixin, ListView):
 
 class GoalListDetails(LoginRequiredMixin, DetailView):
     model = GoalList
+    template_name = 'goallist/detail.html'
     print('Placeholder')
 
 def home(request):
