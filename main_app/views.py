@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import GoalList
+from .models import GoalList, Goal
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 class CreateList(LoginRequiredMixin, CreateView):
     model = GoalList
-    fields = ['title', 'description', 'category', 'restricted', 'goal']
+    fields = ['title', 'description', 'restricted']
 
     def form_valid(self, form):
         # Assign the logged in user (self.request.user) 
@@ -44,6 +44,14 @@ def user_goals(request, user_id):
 @login_required
 def add_goal(request, user_id, list_id):
     return render(request, 'main_app/add_goal.html')
+
+def goallist_detail(request, goallist_id):
+    goallist = GoalList.objects.get(id=goallist_id)
+    goal = Goal.objects.get(id=goal_id)
+    return render(request, 'goallist/detail.html', {
+        'goallist': goallist, 'goal': goal
+    })
+
 
 def signup(request):
   error_message = ''
