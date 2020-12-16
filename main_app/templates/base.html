@@ -17,12 +17,9 @@
       <div class="container-fluid">
           <a class="navbar-brand" href="/">&nbsp;&nbsp;Goal Tracker</a>
           <div class="navbar">
-              <a class="nav-link" href="{% url 'add_goal' 1 1%}">Add Goal</a>
-					    <a class="nav-link" href="{% url 'user_goals' 1 %}">Your Goals</a>
-              <a class="nav-link" href="{% url 'goal_list' %}">Login/Out</a>
-            
               {% if user.is_authenticated %}
               <a href="{% url 'add_goal' user.id 1 %}">Add Goal</a>
+              <a href="{% url 'create_goallist' user.id %}">Create Goal List</a>
               <a href="{% url 'user_goals' user.id %}">Your Goals</a>
               <a href="{% url 'logout' %}">Log Out</a>
               {% else %}

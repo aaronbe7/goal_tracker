@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 class CreateList(CreateView):
     model = GoalList
-    fields = ['title', 'description', 'category', 'restricted', 'goal']
+    fields = ['title', 'description', 'restricted']
 
     def form_valid(self, form):
         # Assign the logged in user (self.request.user) 
@@ -41,6 +41,14 @@ def user_goals(request, user_id):
 
 def add_goal(request, user_id, list_id):
     return render(request, 'main_app/add_goal.html')
+
+def goallist_detail(request, goallist_id):
+    goallist = GoalList.objects.get(id=goallist_id)
+    goal = Goal.objects.get(id=goal_id)
+    return render(request, 'goallist/detail.html', {
+        'goallist': goallist, 'goal': goal
+    })
+
 
 def signup(request):
   error_message = ''
