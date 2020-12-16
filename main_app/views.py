@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 class CreateList(CreateView):
     model = GoalList
-    fields = ['title', 'description', 'category', 'restricted', 'goal']
+    fields = ['title', 'description', 'restricted']
 
     def form_valid(self, form):
         # Assign the logged in user (self.request.user) 
