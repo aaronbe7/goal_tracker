@@ -60,6 +60,10 @@ def user_goals(request, user_id):
     lists = GoalList.objects.filter(user=request.user)
     return render(request, 'main_app/user_goals.html', { 'lists': lists })
 
+@login_required
+def profile(request, user_id):
+    return render(request, 'main_app/profile.html')
+
 # @login_required
 # def user_goallists(request, user_id):
 #     return render(request, 'main_app/user_goallists.html') <-- not needed since we're listing all goal lists under goals
