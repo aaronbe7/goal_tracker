@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class CreateList(LoginRequiredMixin, CreateView):
+class CreateGoalList(LoginRequiredMixin, CreateView):
     model = GoalList
     fields = ['title', 'description', 'restricted']
 
@@ -18,13 +18,14 @@ class CreateList(LoginRequiredMixin, CreateView):
         # Let the CreateView do its job as usual
         return super().form_valid(form)
 
-class UpdateList(LoginRequiredMixin, UpdateView):
+class GoalListUpdate(LoginRequiredMixin, UpdateView):
     model = GoalList
     fields = '__all__'
 
-class DeleteList(LoginRequiredMixin, DeleteView):
+
+class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
-    success_url = '/goallist/'
+    success_url = '/user/user.id/goallist/'
 
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
@@ -43,7 +44,16 @@ def goals_index(request):
 
 @login_required
 def user_goals(request, user_id):
-    return render(request, 'main_app/user_goals.html')
+    return render(request, 'main_app/user_goals.html', {
+        'goallist': goallist, 'goal': goal
+    })
+
+@login_required
+def user_goallists(request, user_id):
+    return render(request, 'main_app/user_goallists.html', {
+        'goallist': goallist, 'goal': goal
+    })
+
 
 @login_required
 def add_goal(request, user_id, list_id):
