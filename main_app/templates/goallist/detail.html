@@ -45,7 +45,7 @@
           <p>Description: {{ goallist.description }}</p>
           {% if goallist.goal.count > 0 %}
             <p>Goals: {% for goal in goallist.goal.all %}
-              <span> {{goal}} </span> <br>
+              <a href={% url 'goals_detail' user.id goallist.id goal.id %}> {{goal}} </a> <br>
             {% endfor %}</p>
           {% else %}
             <p>No goals yet</p>
