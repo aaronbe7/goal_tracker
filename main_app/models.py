@@ -19,11 +19,23 @@ class Category(models.Model):
 class Goal(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=250)
-    category = models.ManyToManyField(Category)
-    # restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
-    # completed = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
-    # goaldate = models.DateField('set goal date')
-    # completiondate = models.DateField('completion date')
+    category = models.ManyToManyField(
+        Category, 
+        blank = True,
+        null = True)
+    restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
+    completed = models.BooleanField(default=False, blank=True) # this may not be the correct syntax, so let me know if you find a better way
+    goaldate = models.DateField(
+        verbose_name = 'set goal date',
+        blank = True,
+        null = True
+         )
+    completiondate = models.DateField(
+        verbose_name = 'completion date',
+        blank = True,
+        null = True
+        )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

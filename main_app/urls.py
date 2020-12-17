@@ -15,5 +15,5 @@ urlpatterns = [
     # path('user/<int:user_id>/goals/<int:pk>/update/', views.UpdateGoal.as_view(), name='goal_update'),
     # path('user/<int:user_id>/goals/<int:pk>/delete/', views.DeleteGoal.as_view(), name='goal_delete'),                
     path('goals/<int:pk>/', views.GoalDetail.as_view(), name='goals_detail'),
-    # path('user/<int:user_id>/goals/<int:list_id>/add_goal', views.add_goal, name="add_goal"),
+    path('user/<int:user_id>/goals/<int:list_id>/add_goal', views.add_goal, name="add_goal"),
 ]

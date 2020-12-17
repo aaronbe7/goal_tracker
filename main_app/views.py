@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import GoalForm
+from django import forms
 
 # Create your views here.
 class CreateGoalList(LoginRequiredMixin, CreateView):
@@ -32,12 +34,21 @@ class GoalListDelete(LoginRequiredMixin, DeleteView):
 
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
-    print('Placeholder')
 
 class GoalListDetail(LoginRequiredMixin, DetailView):
     model = GoalList
     template_name = 'goallist/detail.html'
-    print('Placeholder')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = GoalForm(initial={'user': self.request.user})
+        print('here')
+        print(self.request.user.id)
+        form.fields['user'].widget = forms.HiddenInput()
+        form.fields['completiondate'].widget = forms.HiddenInput()
+        context["form"] = form
+        return context
+    
 
 def home(request):
     return render(request, 'main_app/home.html')
@@ -47,7 +58,8 @@ def goals_index(request):
 
 @login_required
 def user_goals(request, user_id):
-    return render(request, 'main_app/user_goals.html')
+    lists = GoalList.objects.filter(user=request.user)
+    return render(request, 'main_app/user_goals.html', { 'lists': lists })
 
 @login_required
 def user_goallists(request, user_id):
@@ -58,13 +70,14 @@ def user_goallists(request, user_id):
 def add_goal(request, user_id, list_id):
     return render(request, 'main_app/add_goal.html')
 
-def goallist_detail(request, goallist_id):
-    goallist = GoalList.objects.get(id=goallist_id)
-    goal = Goal.objects.get(id=goal_id)
-    return render(request, 'goallist/detail.html', {
-        'goallist': goallist, 'goal': goal
-    })
-
+@login_required
+def add_goal(request, user_id, list_id):
+    form = GoalForm(request.POST)
+    if form.is_valid():
+        new_goal = form.save(commit=False)
+        new_goal.save()
+        GoalList.objects.get(id=list_id).goal.add(new_goal)
+    return redirect('goallist_detail', user_id = user_id, pk=list_id)
 
 def signup(request):
   error_message = ''
