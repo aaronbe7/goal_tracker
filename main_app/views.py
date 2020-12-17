@@ -10,7 +10,7 @@ from .forms import GoalForm
 from django import forms
 
 # Create your views here.
-class CreateList(LoginRequiredMixin, CreateView):
+class CreateGoalList(LoginRequiredMixin, CreateView):
     model = GoalList
     fields = ['title', 'description', 'restricted']
 
@@ -20,13 +20,17 @@ class CreateList(LoginRequiredMixin, CreateView):
         # Let the CreateView do its job as usual
         return super().form_valid(form)
 
-class UpdateList(LoginRequiredMixin, UpdateView):
+class GoalListUpdate(LoginRequiredMixin, UpdateView):
     model = GoalList
     fields = '__all__'
 
-class DeleteList(LoginRequiredMixin, DeleteView):
+
+class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
-    success_url = '/goallist/'
+    def get_success_url(self):
+        return reverse('user_goallists', kwargs={'user_id': self.request.user.id})
+
+
 
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
@@ -56,6 +60,11 @@ def goals_index(request):
 def user_goals(request, user_id):
     lists = GoalList.objects.filter(user=request.user)
     return render(request, 'main_app/user_goals.html', { 'lists': lists })
+
+@login_required
+def user_goallists(request, user_id):
+    return render(request, 'main_app/user_goallists.html')
+
 
 @login_required
 def add_goal(request, user_id, list_id):

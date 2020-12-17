@@ -23,6 +23,10 @@
             Add Goal
           </button>
         </div>
+        <div class="card-action">
+          <a href="{% url 'goallist_update' user.id goallist.id %}">Edit</a>
+          <a href="{% url 'goallist_delete' user.id goallist.id %}">Delete</a>
+        </div>
       </div>
   </div>
 </div>
@@ -44,7 +48,6 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <input type="submit" value="Add goal!" class="btn btn-primary" form="add_goal">
       </div>
-
     </div>
   </div>
 </div>
