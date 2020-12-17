@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
   <div class="left">
     {% if object %}
@@ -9,10 +11,8 @@
 {% endif %}
   </div>
 <form action="" method="post">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn btn-primary">
+      {% csrf_token %}
+      {{ form|crispy }}
+  <input type="submit" value="Submit!" id="spacing" class="btn btn-primary">
   </form>
 {% endblock %}

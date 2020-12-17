@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
 <div class="container">
     <div class="row">
         <div class="col-10"> 
@@ -16,13 +17,19 @@
 </div>
 
 {% for list in lists %}
-    <div class="card">
-         <div class="card-content">
-            <h3>List: {{ list.title }}: {{ list.category }}</h3>
-            <h6>Description: {{ list.description }}</h6>
-            <h6>Goal: {{ list.goals }}</h6>
-         </div>
-     </div>
+<div class="card">
+    <div class="card-header">
+        <div class="text-primary">
+            <a href="{% url 'goallist_detail' user.id list.id %}" class="text-primary btn">
+                <h3>{{ list.title }}: {{ list.category }} </h3>
+                 </a>
+                </div>
+                <h6>Description: {{ list.description }}</h6>
+            </div>
+            <div class="card-body">
+                <h6>Goal: {{ list.goals }}</h6>
+            </div>
+        </div>&nbsp
 {% endfor %}
 
 {% endblock %}
