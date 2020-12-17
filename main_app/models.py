@@ -21,8 +21,7 @@ class Goal(models.Model):
     description = models.TextField(max_length=250)
     category = models.ManyToManyField(
         Category, 
-        blank = True,
-        null = True)
+        blank = True)
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
     completed = models.BooleanField(default=False, blank=True) # this may not be the correct syntax, so let me know if you find a better way
     goaldate = models.DateField(
@@ -46,7 +45,8 @@ class Goal(models.Model):
 class GoalList(models.Model):
     title = models.CharField(max_length=150)    
     description = models.TextField(max_length=250)
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, 
+        blank = True)
     goal = models.ManyToManyField(Goal)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
