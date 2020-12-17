@@ -19,6 +19,7 @@
           <div class="navbar">
               {% if user.is_authenticated %}
               <a id="text-color" class="nav-link" href="{% url 'user_goals' user.id %}">Your Goals</a>
+              <a id="text-color" class="nav-link" href="{% url 'user_goallists' user.id %}">Your Goal Lists</a>
               <a id="text-color" class="nav-link" href="{% url 'create_goallist' user.id  %}">Create a Goal List</a>
               <a id="text-color" class="nav-link" href="{% url 'logout' %}">Log Out</a>
               {% else %}
