@@ -25,7 +25,10 @@ class GoalListUpdate(LoginRequiredMixin, UpdateView):
 
 class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
-    success_url = '/user/user.id/goallist/'
+    def get_success_url(self):
+        return reverse('user_goallists', kwargs={'user_id': self.request.user.id})
+
+
 
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
@@ -44,15 +47,11 @@ def goals_index(request):
 
 @login_required
 def user_goals(request, user_id):
-    return render(request, 'main_app/user_goals.html', {
-        'goallist': goallist, 'goal': goal
-    })
+    return render(request, 'main_app/user_goals.html')
 
 @login_required
 def user_goallists(request, user_id):
-    return render(request, 'main_app/user_goallists.html', {
-        'goallist': goallist, 'goal': goal
-    })
+    return render(request, 'main_app/user_goallists.html')
 
 
 @login_required

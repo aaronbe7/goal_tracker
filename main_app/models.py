@@ -44,6 +44,9 @@ class GoalList(models.Model):
 
     def get_absolute_url(self):
         return reverse('goallist_detail', kwargs={'user_id': self.user_id ,'pk': self.pk})
+    
+    def get_success_url(self):
+        return reverse('user_goallists', kwargs={'user_id': self.request.user.id})
 
 
 
