@@ -30,7 +30,7 @@ class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
     print('Placeholder')
 
-class GoalListDetails(LoginRequiredMixin, DetailView):
+class GoalListDetail(LoginRequiredMixin, DetailView):
     model = GoalList
     template_name = 'goallist/detail.html'
     print('Placeholder')
