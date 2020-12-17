@@ -22,7 +22,7 @@ class CreateGoalList(LoginRequiredMixin, CreateView):
 
 class GoalListUpdate(LoginRequiredMixin, UpdateView):
     model = GoalList
-    fields = '__all__'
+    fields = ['title', 'description', 'restricted']
 
 
 class GoalListDelete(LoginRequiredMixin, DeleteView):
