@@ -76,8 +76,9 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-class Goal(DetailView):
+class GoalDetail(DetailView):
     model = Goal
+    template_name = 'goals/detail.html'    
 
 class GoalCreate(CreateView):
     model = Goal
