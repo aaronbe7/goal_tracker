@@ -6,10 +6,15 @@
     <div class="col s6">
       <div class="card">
         <div class="card-content">
-          <span class="card-title">{{ goal.title }}</span>
+          <p class="card-title">{{ goal.title }}</p>
           <p>Description: {{ goal.description }}</p>
-
-
+          {% if goal.goaldate %}
+            <p>Goal Date: {{goal.goaldate}} </p>
+          {% endif %}
+          <p>Completed: {{goal.completed}} </p>
+          {% if goal.completiondate %}
+            <p>Completion Date: {{goal.completiondate}} </p>
+          {% endif %}                  
         </div>
 
     </div>

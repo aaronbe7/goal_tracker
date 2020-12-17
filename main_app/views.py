@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import GoalForm
 from django import forms
+from django.urls import reverse
 
 # Create your views here.
 class CreateGoalList(LoginRequiredMixin, CreateView):
@@ -28,7 +29,7 @@ class GoalListUpdate(LoginRequiredMixin, UpdateView):
 class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
     def get_success_url(self):
-        return reverse('user_goallists', kwargs={'user_id': self.request.user.id})
+        return reverse('user_goals', kwargs={'user_id': self.request.user.id})
 
 
 

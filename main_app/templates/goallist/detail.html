@@ -9,23 +9,47 @@
 <div class="row">
     <div class="col s6">
       <div class="card">
+       <div class="dropdown">
+          <button 
+            class="btn btn-secondary dropdown-toggle position-absolute" 
+            type="button" 
+            id="dropdownMenuButton" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            style="right: 0px">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+              <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add Goal
+              </button>
+            </li>
+            <li>
+              <a href="{% url 'goallist_update' user.id goallist.id %}">
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Edit
+                </button>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'goallist_delete' user.id goallist.id %}">
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Delete
+                </button>
+              </a>
+            </li>
+          </ul>
+        </div>
         <div class="card-content">
           <span class="card-title">{{ goallist.title }}</span>
           <p>Description: {{ goallist.description }}</p>
           {% if goallist.goal.count > 0 %}
             <p>Goals: {% for goal in goallist.goal.all %}
-              <span> {{goal}} </span> <br>
+              <a href={% url 'goals_detail' user.id goallist.id goal.id %}> {{goal}} </a> <br>
             {% endfor %}</p>
           {% else %}
             <p>No goals yet</p>
-          {% endif %}
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Add Goal
-          </button>
-        </div>
-        <div class="card-action">
-          <a href="{% url 'goallist_update' user.id goallist.id %}">Edit</a>
-          <a href="{% url 'goallist_delete' user.id goallist.id %}">Delete</a>
+          {% endif %}          
         </div>
       </div>
   </div>
