@@ -9,6 +9,7 @@ urlpatterns = [
     path('user/<int:user_id>/goallist/create', views.CreateList.as_view(), name="create_goallist"),
     path('user/<int:user_id>/goallist/<int:pk>/update/', views.UpdateList.as_view(), name='goallist_update'),
     path('user/<int:user_id>/goallist/<int:pk>/delete/', views.DeleteList.as_view(), name='goallist_delete'),
+    path('user/<int:user_id>/goallist/<int:pk>/', views.GoalListDetail.as_view(), name='goallist_detail'),
     path('goals/create', views.GoalCreate.as_view(), name="create_goal"),
     # path('user/<int:user_id>/goals/<int:pk>/update/', views.UpdateGoal.as_view(), name='goal_update'),
     # path('user/<int:user_id>/goals/<int:pk>/delete/', views.DeleteGoal.as_view(), name='goal_delete'),                
