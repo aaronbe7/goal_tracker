@@ -20,10 +20,10 @@ class Goal(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=250)
     category = models.ManyToManyField(Category)
-    restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
-    completed = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
-    goaldate = models.DateField('set goal date')
-    completiondate = models.DateField('completion date')
+    # restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
+    # completed = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
+    # goaldate = models.DateField('set goal date')
+    # completiondate = models.DateField('completion date')
 
     def __str__(self):
         return self.title

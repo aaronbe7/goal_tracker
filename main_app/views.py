@@ -24,7 +24,7 @@ class UpdateList(LoginRequiredMixin, UpdateView):
 
 class DeleteList(LoginRequiredMixin, DeleteView):
     model = GoalList
-    success_url = '/goals/'
+    success_url = '/goallist/'
 
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
@@ -75,3 +75,20 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+class GoalDetail(DetailView):
+    model = Goal
+    template_name = 'goals/detail.html'    
+
+class GoalCreate(CreateView):
+    model = Goal
+    fields = ['title', 'description', 'category']
+
+class GoalUpdate(UpdateView):
+    model = Goal
+    fiedls = '__all__'
+
+class GoalDelete(DeleteView):
+    model = Goal
+    success_url = '/goals/'
+
