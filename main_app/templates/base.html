@@ -21,10 +21,11 @@
               <a id="text-color" class="nav-link" href="{% url 'user_goals' user.id %}">Your Goal Lists</a>
               <a id="text-color" class="nav-link" href="{% url 'create_goallist' user.id  %}">Create a Goal List</a>
               <div class="nav-item dropdown">
-                <a id="text-color" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, {{ user.username }}</a>
+                <a id="text-color" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, {{ user.username }}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id="text-color"  class="dropdown-item" href="{% url 'profile' user.id %}">Hello, {{ user.username }}</a>
-              <a id="text-color"  class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              <a id="profile-color" class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+              <div class="dropdown-divider"></div>
+              <a id="logout-color" class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
               </div>
               </div>
               {% else %}
