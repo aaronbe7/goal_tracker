@@ -12,8 +12,14 @@ urlpatterns = [
     path('user/<int:user_id>/goallist/<int:pk>/delete/', views.GoalListDelete.as_view(), name='goallist_delete'),
     path('user/<int:user_id>/goallist/<int:pk>/', views.GoalListDetail.as_view(), name='goallist_detail'),
     path('goals/create', views.GoalCreate.as_view(), name="create_goal"),
+<<<<<<< HEAD
     path('user/<int:user_id>/goals/<int:pk>/update/', views.GoalUpdate.as_view(), name='goal_update'),
     path('user/<int:user_id>/goals/<int:pk>/delete/', views.GoalDelete.as_view(), name='goal_delete'),
+=======
+    path('user/<int:user_id>/', views.profile, name='profile'),
+    # path('user/<int:user_id>/goals/<int:pk>/update/', views.UpdateGoal.as_view(), name='goal_update'),
+    # path('user/<int:user_id>/goals/<int:pk>/delete/', views.DeleteGoal.as_view(), name='goal_delete'),
+>>>>>>> 7346dd48286a470b5e31e6ec5e07ba40907d43b0
     path('user/<int:user_id>/goallist/<int:goallist_id>/goals/<int:pk>/', views.GoalDetail.as_view(), name='goals_detail'),
     path('user/<int:user_id>/goals/<int:list_id>/add_goal', views.add_goal, name="add_goal"),
 ]

@@ -3,11 +3,21 @@
     color: #FF7E1B;
 }
 
+.layout {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+}
+
 .left {
     color: #FF7E1B;
 }
 
 #text-color {
+    color: white;
+}
+
+#text-logout {
     color: white;
 }
 
