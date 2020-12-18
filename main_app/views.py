@@ -32,7 +32,6 @@ class GoalListDelete(LoginRequiredMixin, DeleteView):
         return reverse('user_goals', kwargs={'user_id': self.request.user.id})
 
 
-
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
 
@@ -124,8 +123,7 @@ def signup(request):
 
 class GoalCreate(LoginRequiredMixin, CreateView):
     model = Goal
-    fields = ['title', 'description', 'category']
-    
+    fields = '__all__'
 
 
 class GoalDetail(LoginRequiredMixin, DetailView):
@@ -135,11 +133,17 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
     fields = '__all__'
+    def get_success_url(self):
+            return reverse('goallist_detail', kwargs={
+                'user_id': self.request.user.id,
+                'pk': self.object.goallist_set.first().id
+            })
     
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
-    success_url = '/goals/'
     def get_success_url(self):
-        return redirect('goallist_detail', user_id = user_id, pk=list_id)
-
+            return reverse('goallist_detail', kwargs={
+                'user_id': self.request.user.id,
+                'pk': self.object.goallist_set.first().id
+            })

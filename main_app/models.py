@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 CATEGORIES = (
-    ('0', 'Others'),
+    ('0', 'Other'),
     ('1', 'Work/Career'),
     ('2', 'Finance'),
     ('3', 'Social'),
