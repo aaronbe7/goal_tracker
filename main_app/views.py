@@ -1,14 +1,19 @@
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import GoalList, Goal
+from .models import GoalList, Goal, Photo
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import GoalForm, EditProfileForm
 from django import forms
+import uuid
+import boto3
 from django.urls import reverse
+
+S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
+BUCKET  = 'catcatcollect' 
 
 # Create your views here.
 class CreateGoalList(LoginRequiredMixin, CreateView):
@@ -30,8 +35,6 @@ class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
     def get_success_url(self):
         return reverse('user_goals', kwargs={'user_id': self.request.user.id})
-
-
 
 class GoalsList(LoginRequiredMixin, ListView):
     model = GoalList
@@ -77,7 +80,6 @@ def profile(request):
             form.save()
             return redirect('/user')
 
-
     else:
         form = EditProfileForm(instance=request.user)
         return render(request, 'main_app/profile.html', {'form': form})
@@ -87,6 +89,19 @@ def profile(request):
 # def user_goallists(request, user_id):
 #     return render(request, 'main_app/user_goallists.html') <-- not needed since we're listing all goal lists under goals
 
+@login_required
+def profile_photo(request, user_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            Photo.objects.create(url=url, user_id=user_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('profile')
 
 @login_required
 def add_goal(request, user_id, list_id):
@@ -120,13 +135,9 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-
-
 class GoalCreate(LoginRequiredMixin, CreateView):
     model = Goal
     fields = ['title', 'description', 'category']
-    
-
 
 class GoalDetail(LoginRequiredMixin, DetailView):
     model = Goal
