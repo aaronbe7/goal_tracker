@@ -44,19 +44,23 @@
           <span class="card-title">{{ goallist.title }}</span>
           <p>Description: {{ goallist.description }}</p>
           {% if goallist.goal.count > 0 %}
-            <p>Goals: {% for goal in goallist.goal.all %}
-              <a href={% url 'goals_detail' user.id goallist.id goal.id %}> {{goal}} </a> 
-              <a href="{% url 'goal_update' user.id goal.id %}">
-                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Edit
-                </button>
-              </a>
-              <a href="{% url 'goal_delete' user.id goal.id %}">
-                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Delete
-                </button>
-              </a><br>
-            {% endfor %}</p>
+
+            <p>Goals:<br> {% for goal in goallist.goal.all %}
+              <ul class="list-group list-group-horizontal">
+              <li class="list-group-item list-group-item-action list-group-item-primary"> 
+                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
+                {{goal}} </a>
+                <a href="{% url 'goal_update' user.id goal.id %}">
+                  <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
+                <a href="{% url 'goal_delete' user.id goal.id %}">
+                  <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
+              </li>
+
+              </ul>
+
+            {% endfor %}
+           </p>
           {% else %}
             <p>No goals yet</p>
           {% endif %}          
