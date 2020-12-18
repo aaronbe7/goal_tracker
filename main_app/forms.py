@@ -6,8 +6,9 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 class GoalForm(ModelForm):
     category = forms.MultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple,
-        choices=CATEGORIES
+        widget=forms.CheckboxSelectMultiple(),
+        choices=CATEGORIES,
+        initial=('0')
     )
 
     class Meta:
