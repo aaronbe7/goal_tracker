@@ -5,23 +5,24 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Category(models.Model):
-    title = models.CharField(max_length=25)
-
-    def __str__(self):
-        # Nice method for obtaining the friendly value of a Field.choice
-        return self.title
-    
-    def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'pk': self.id})
-
+CATEGORIES = (
+    ('0', 'Others'),
+    ('1', 'Work/Career'),
+    ('2', 'Finance'),
+    ('3', 'Social'),
+    ('4', 'Family'),
+    ('5', 'Intellectual'),
+    ('6', 'Health/Fitness'), 
+    ('7', 'Spiritual'),
+    ('8', 'Education'),
+    ('9', 'Travel/Adventure'),
+    ('10', 'Hobbies'),
+)
 
 class Goal(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=250)
-    category = models.ManyToManyField(
-        Category, 
-        blank = True)
+    category = models.CharField(max_length=250)
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
     completed = models.BooleanField(default=False, blank=True) # this may not be the correct syntax, so let me know if you find a better way
     goaldate = models.DateField(
@@ -45,8 +46,6 @@ class Goal(models.Model):
 class GoalList(models.Model):
     title = models.CharField(max_length=150)    
     description = models.TextField(max_length=250)
-    category = models.ManyToManyField(Category, 
-        blank = True)
     goal = models.ManyToManyField(Goal)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
