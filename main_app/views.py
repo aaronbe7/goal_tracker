@@ -48,7 +48,7 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
         context["form"] = form
         return context
 
-    def goallists_detail(request, cat_id):
+    def goallists_detail(request, goallist_id):
         goallists = GoalList.objects.get(id=goallist_id)
         # instantiate FeedingForm to be rendered in the template
         goals = Goal.objects.get(id=goal_id)
@@ -135,17 +135,11 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
     fields = '__all__'
-    success_url = 'javascript:history.go(-1)'
-
-
-    # def get_success_url(self, request, user_id, list_id):
-    #     print('THESE ARE IDS: ', user_id, list_id)
-    #     return redirect('goallist_detail', user_id = user_id, pk=list_id)
     
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
-    success_url = 'javascript:history.go(-1)'
-    # def get_success_url(self,request, user_id, list_id):
-    #     return redirect('goallist_detail', user_id = user_id, pk=list_id)
+    success_url = '/goals/'
+    def get_success_url(self):
+        return redirect('goallist_detail', user_id = user_id, pk=list_id)
 
