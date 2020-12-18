@@ -46,17 +46,18 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         form = GoalForm(initial={'user': self.request.user})
+        form.fields['user'].widget = forms.HiddenInput()
         form.fields['completiondate'].widget = forms.HiddenInput()
         context["form"] = form
         return context
 
-    # def goallists_detail(request, cat_id):
-    #     goallists = GoalList.objects.get(id=goallist_id)
-    #     # instantiate FeedingForm to be rendered in the template
-    #     goals = Goal.objects.get(id=goal_id)
-    #     return render(request, 'goallist/detail.html', {
-    #         'goallists': goallist, 'goals': goal
-    #     })
+    def goallists_detail(request, goallist_id):
+        goallists = GoalList.objects.get(id=goallist_id)
+        # instantiate FeedingForm to be rendered in the template
+        goals = Goal.objects.get(id=goal_id)
+        return render(request, 'goallist/detail.html', {
+            'goallists': goallist, 'goals': goal
+        })
         
 
 def home(request):
@@ -136,7 +137,8 @@ def signup(request):
 
 class GoalCreate(LoginRequiredMixin, CreateView):
     model = Goal
-    fields = ['title', 'description', 'category']
+    fields = '__all__'
+
 
 class GoalDetail(LoginRequiredMixin, DetailView):
     model = Goal
@@ -144,9 +146,18 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
-    form_class = GoalForm
+    fields = '__all__'
+    def get_success_url(self):
+            return reverse('goallist_detail', kwargs={
+                'user_id': self.request.user.id,
+                'pk': self.object.goallist_set.first().id
+            })
+    
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
-    success_url = '/goals/'
-
+    def get_success_url(self):
+            return reverse('goallist_detail', kwargs={
+                'user_id': self.request.user.id,
+                'pk': self.object.goallist_set.first().id
+            })

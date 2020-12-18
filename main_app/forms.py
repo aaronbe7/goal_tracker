@@ -9,9 +9,11 @@ class GoalForm(ModelForm):
         widget=forms.CheckboxSelectMultiple,
         choices=CATEGORIES
     )
+
     class Meta:
         model = Goal
         fields = '__all__'
+
      
 
 class EditProfileForm(UserChangeForm):
