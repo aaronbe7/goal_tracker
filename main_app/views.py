@@ -2,11 +2,11 @@ from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .models import GoalList, Goal
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import GoalForm
+from .forms import GoalForm, EditProfileForm
 from django import forms
 from django.urls import reverse
 
@@ -61,8 +61,19 @@ def user_goals(request, user_id):
     return render(request, 'main_app/user_goals.html', { 'lists': lists })
 
 @login_required
-def profile(request, user_id):
-    return render(request, 'main_app/profile.html')
+def profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('/user')
+
+
+    else:
+        form = EditProfileForm(instance=request.user)
+        return render(request, 'main_app/profile.html', {'form': form})
+    
 
 # @login_required
 # def user_goallists(request, user_id):
