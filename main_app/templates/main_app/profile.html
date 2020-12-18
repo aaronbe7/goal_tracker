@@ -7,13 +7,34 @@
 <div class="left">
 <h1 class="display-2">{{ user.username }}'s profile</h1>
 </div>
-<h1 class="display-6">Edit <span>Profile</span></h1>
+<h1 class="display-6">Edit <span>Username</span></h1>
 <div>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
+        <br>
         <button type="submit" class="btn btn-primary">Update Username</button>
     </form>
 </div>
+<hr>
+
+{% for photo in user.photo_set.all %}
+<h1 class="display-6">Profile Picture</h1>
+<img class="card" style="width: 10rem; height: 100%" src="{{photo.url}}">
+<br>
+<a href="{% url ''' %" class="btn btn-primary">Delete Profile Photo</a>
+  {% empty %}
+<div class="card-panel teal-text center-align">No Profile Picture Uploaded</div>
+<form action="{% url 'profile_photo' user.id%}" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <input type="file" class="img-thumbnail" name="photo-file">
+    <br><br>
+    <input type="submit" class="btn btn-primary" value="Upload Profile Picture">
+    </form>
+{% endfor %}
+<hr>
+
+
+
 
 {% endblock %}
