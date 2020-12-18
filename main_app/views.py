@@ -139,5 +139,5 @@ class GoalUpdate(LoginRequiredMixin, UpdateView):
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
-    success_url = '/goals/'
+    success_url = '/goallist_detail/'
 
