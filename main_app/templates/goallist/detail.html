@@ -51,10 +51,11 @@
                 <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                 <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
                 {{goal}} </a>
-                <a href="{% url 'goal_update' user.id goal.id %}">
-                  <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
                 <a href="{% url 'goal_delete' user.id goal.id %}">
                   <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
+                <a href="{% url 'goal_update' user.id goal.id %}">
+                  <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
+               
               </li>
 
               </ul>
