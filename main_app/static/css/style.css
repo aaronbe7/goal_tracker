@@ -31,3 +31,14 @@ a {
 	color: black;
 	text-decoration: none;
 }
+
+#id_user {
+    display: none;
+}
+label[for="id_user"]{
+    display: none;
+}
+
+#div_id_category {
+    margin-bottom: 30px;
+}

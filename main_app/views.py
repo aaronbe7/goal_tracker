@@ -43,7 +43,6 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         form = GoalForm(initial={'user': self.request.user})
-        form.fields['user'].widget = forms.HiddenInput()
         form.fields['completiondate'].widget = forms.HiddenInput()
         context["form"] = form
         return context
@@ -134,8 +133,7 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
-    fields = '__all__'
-    
+    form_class = GoalForm
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal

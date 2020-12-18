@@ -6,27 +6,23 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 CATEGORIES = (
-    ('Others', 'Others'),
-    ('Work/Career', 'Work/Career'),
-    ('Finance', 'Finance'),
-    ('Social', 'Social'),
-    ('Family', 'Family'),
-    ('Intellectual', 'Intellectual'),
-    ('Health/Fitness', 'Health/Fitness'), 
-    ('Spiritual', 'Spiritual'),
-    ('Education', 'Education'),
-    ('Travel/Adventure', 'Travel/Adventure'),
-    ('Hobbies', 'Hobbies'),
+    ('0', 'Others'),
+    ('1', 'Work/Career'),
+    ('2', 'Finance'),
+    ('3', 'Social'),
+    ('4', 'Family'),
+    ('5', 'Intellectual'),
+    ('6', 'Health/Fitness'), 
+    ('7', 'Spiritual'),
+    ('8', 'Education'),
+    ('9', 'Travel/Adventure'),
+    ('10', 'Hobbies'),
 )
 
 class Goal(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=250)
-    category = models.CharField(
-        max_length = 25,
-        choices = CATEGORIES,
-        default = CATEGORIES[0][0],
-    )
+    category = models.CharField(max_length=250)
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
     completed = models.BooleanField(default=False, blank=True) # this may not be the correct syntax, so let me know if you find a better way
     goaldate = models.DateField(
