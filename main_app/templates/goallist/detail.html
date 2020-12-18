@@ -45,7 +45,17 @@
           <p>Description: {{ goallist.description }}</p>
           {% if goallist.goal.count > 0 %}
             <p>Goals: {% for goal in goallist.goal.all %}
-              <a href={% url 'goals_detail' user.id goallist.id goal.id %}> {{goal}} </a> <br>
+              <a href={% url 'goals_detail' user.id goallist.id goal.id %}> {{goal}} </a> 
+              <a href="{% url 'goal_update' user.id goal.id %}">
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Edit
+                </button>
+              </a>
+              <a href="{% url 'goal_delete' user.id goal.id %}">
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Delete
+                </button>
+              </a><br>
             {% endfor %}</p>
           {% else %}
             <p>No goals yet</p>
@@ -75,6 +85,9 @@
     </div>
   </div>
 </div>
+
+
+
 <!-- Date Picker -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script

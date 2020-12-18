@@ -47,7 +47,15 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
         form.fields['completiondate'].widget = forms.HiddenInput()
         context["form"] = form
         return context
-    
+
+    def goallists_detail(request, cat_id):
+        goallists = GoalList.objects.get(id=goallist_id)
+        # instantiate FeedingForm to be rendered in the template
+        goals = Goal.objects.get(id=goal_id)
+        return render(request, 'goallist/detail.html', {
+            'goallists': goallist, 'goals': goal
+        })
+        
 
 def home(request):
     return render(request, 'main_app/home.html')
@@ -112,19 +120,24 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-class GoalDetail(DetailView):
+
+
+class GoalCreate(LoginRequiredMixin, CreateView):
+    model = Goal
+    fields = ['title', 'description', 'category']
+    
+
+
+class GoalDetail(LoginRequiredMixin, DetailView):
     model = Goal
     template_name = 'goals/detail.html'    
 
-class GoalCreate(CreateView):
+class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
-    fields = ['title', 'description', 'category']
+    fields = '__all__'
+    
 
-class GoalUpdate(UpdateView):
-    model = Goal
-    fiedls = '__all__'
-
-class GoalDelete(DeleteView):
+class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
     success_url = '/goals/'
 
