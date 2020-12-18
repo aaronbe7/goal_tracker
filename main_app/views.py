@@ -134,6 +134,11 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
     form_class = GoalForm
+    def get_success_url(self):
+        return reverse('goallist_detail', kwargs={
+            'user_id': self.request.user.id,
+            'pk': self.object.goallist_set.first().id
+        })
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
