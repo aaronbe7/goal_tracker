@@ -135,9 +135,17 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
     fields = '__all__'
+    success_url = 'javascript:history.go(-1)'
+
+
+    # def get_success_url(self, request, user_id, list_id):
+    #     print('THESE ARE IDS: ', user_id, list_id)
+    #     return redirect('goallist_detail', user_id = user_id, pk=list_id)
     
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
-    success_url = '/goallist_detail/'
+    success_url = 'javascript:history.go(-1)'
+    # def get_success_url(self,request, user_id, list_id):
+    #     return redirect('goallist_detail', user_id = user_id, pk=list_id)
 
