@@ -5,8 +5,26 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+CATEGORIES = (
+    ('Work/Career', 'Work/Career'),
+    ('Finance', 'Finance'),
+    ('Social', 'Social'),
+    ('Family', 'Family'),
+    ('Intellectual', 'Intellectual'),
+    ('Health/Fitness', 'Health/Fitness'), 
+    ('Spiritual', 'Spiritual'),
+    ('Education', 'Education'),
+    ('Travel/Adventure', 'Travel/Adventure'),
+    ('Hobbies', 'Hobbies'),
+    ('Others', 'Others')
+)
+
 class Category(models.Model):
-    title = models.CharField(max_length=25)
+    title = models.CharField(
+        max_length = 25,
+        choices = CATEGORIES,
+        default = CATEGORIES[0][0]
+    )
 
     def __str__(self):
         # Nice method for obtaining the friendly value of a Field.choice
@@ -45,8 +63,6 @@ class Goal(models.Model):
 class GoalList(models.Model):
     title = models.CharField(max_length=150)    
     description = models.TextField(max_length=250)
-    category = models.ManyToManyField(Category, 
-        blank = True)
     goal = models.ManyToManyField(Goal)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way

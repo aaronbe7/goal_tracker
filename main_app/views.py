@@ -48,13 +48,13 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
         context["form"] = form
         return context
 
-    def goallists_detail(request, cat_id):
-        goallists = GoalList.objects.get(id=goallist_id)
-        # instantiate FeedingForm to be rendered in the template
-        goals = Goal.objects.get(id=goal_id)
-        return render(request, 'goallist/detail.html', {
-            'goallists': goallist, 'goals': goal
-        })
+    # def goallists_detail(request, cat_id):
+    #     goallists = GoalList.objects.get(id=goallist_id)
+    #     # instantiate FeedingForm to be rendered in the template
+    #     goals = Goal.objects.get(id=goal_id)
+    #     return render(request, 'goallist/detail.html', {
+    #         'goallists': goallist, 'goals': goal
+    #     })
         
 
 def home(request):
