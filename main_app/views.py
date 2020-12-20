@@ -51,6 +51,8 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
         context["form"] = form
         return context
 
+    # ---------- I'm commenting this part because this won't work in 
+    # ---------- Class Based Views.
     # def goallists_detail(request, goallist_id):
     #     goallists = GoalList.objects.get(id=goallist_id)
     #     # instantiate FeedingForm to be rendered in the template
