@@ -66,12 +66,8 @@ def home(request):
 def goals_index(request):
     if request.method == "POST":
         goals = Goal.objects.filter(category__icontains=request.POST['category'])
-        print(request.POST['category'])
-        print(goals)
     else: 
         goals = Goal.objects.all()
-
-    print(goals)
     return render(request, 'goals/index.html', {
         'goals': goals,
         'user': request.user,
