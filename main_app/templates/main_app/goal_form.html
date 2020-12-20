@@ -6,14 +6,35 @@
 
   <div class="left">
     {% if object %}
-        <h1>Edit <span">{{object.name}}</span></h1>
+      <h1>Edit <span>{{object.title}}</span></h1>
     {% else %}
-        <h1 class="display-4">Add Goal</h1>
-{% endif %}
+      <h1 class="display-4">Add Goal</h1>
+    {% endif %}
   </div>
-<form action="" method="post">
-      {% csrf_token %}
-      {{ form|crispy }}
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
   <input type="submit" value="Submit!" id="spacing" class="btn btn-primary">
   </form>
+
+
+<!-- Date Picker -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+	type="text/javascript"
+></script>
+<link
+	href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+	rel="stylesheet"
+	type="text/css"
+/>
+<script>
+	$('#id_goaldate').datepicker({
+		format: 'mm/dd/yyyy'
+	});
+  $('#id_completiondate').datepicker({
+		format: 'mm/dd/yyyy'
+	});
+  </script>
 {% endblock %}

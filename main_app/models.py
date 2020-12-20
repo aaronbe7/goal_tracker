@@ -2,27 +2,31 @@ from django.db import models
 from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import User
+from multiselectfield import MultiSelectField
 
 # Create your models here.
 
 CATEGORIES = (
-    ('0', 'Other'),
-    ('1', 'Work/Career'),
-    ('2', 'Finance'),
-    ('3', 'Social'),
-    ('4', 'Family'),
-    ('5', 'Intellectual'),
-    ('6', 'Health/Fitness'), 
-    ('7', 'Spiritual'),
-    ('8', 'Education'),
-    ('9', 'Travel/Adventure'),
-    ('10', 'Hobbies'),
+    ('oth', 'Others'),
+    ('wor', 'Work/Career'),
+    ('fnc', 'Finance'),
+    ('soc', 'Social'),
+    ('fam', 'Family'),
+    ('int', 'Intellectual'),
+    ('fit', 'Health/Fitness'), 
+    ('spi', 'Spiritual'),
+    ('edu', 'Education'),
+    ('adv', 'Travel/Adventure'),
+    ('hob', 'Hobbies'),
 )
 
 class Goal(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=250)
-    category = models.CharField(max_length=250)
+    category = MultiSelectField(
+        choices=CATEGORIES,
+        default=('oth')
+        )
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
     completed = models.BooleanField(default=False, blank=True) # this may not be the correct syntax, so let me know if you find a better way
     goaldate = models.DateField(
