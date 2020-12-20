@@ -1,12 +1,12 @@
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import GoalList, Goal
+from .models import GoalList, Goal, CATEGORIES
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import GoalForm, EditProfileForm
+from .forms import GoalForm, EditProfileForm, CategoryFilterForm
 from django import forms
 from django.urls import reverse
 
@@ -56,11 +56,24 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
     #     })
         
 
-def home(request):
+def home(request): 
     return render(request, 'main_app/home.html')
 
 def goals_index(request):
-    return render(request, 'goals/index.html')
+    if request.method == "POST":
+        goals = Goal.objects.filter(category__icontains=request.POST['category'])
+        print(request.POST['category'])
+        print(goals)
+    else: 
+        goals = Goal.objects.all()
+
+    print(goals)
+    return render(request, 'goals/index.html', {
+        'goals': goals,
+        'user': request.user,
+        'CATEGORIES': CATEGORIES,
+        'form': CategoryFilterForm
+    })
 
 @login_required
 def user_goals(request, user_id):
