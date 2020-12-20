@@ -8,6 +8,7 @@ class GoalForm(ModelForm):
     class Meta:
         model = Goal
         fields = '__all__'
+
      
 
 class EditProfileForm(UserChangeForm):
