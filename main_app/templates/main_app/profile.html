@@ -11,8 +11,8 @@
 <div>
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
-        <br>
+        {{ form.username }}
+        <br><br>
         <button type="submit" class="btn btn-primary">Update Username</button>
     </form>
 </div>
@@ -22,7 +22,7 @@
 <h1 class="display-6">Profile Picture</h1>
 <img class="card" style="width: 10rem; height: 100%" src="{{photo.url}}">
 <br>
-<a href="{% url ''' %" class="btn btn-primary">Delete Profile Photo</a>
+<a href="{% url '' %" class="btn btn-primary">Delete Profile Photo</a>
   {% empty %}
 <div class="card-panel teal-text center-align">No Profile Picture Uploaded</div>
 <form action="{% url 'profile_photo' user.id%}" enctype="multipart/form-data" method="POST">

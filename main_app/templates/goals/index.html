@@ -16,6 +16,7 @@
     <input type="submit" value="Filter!" class="btn btn-primary">
     <a href="{% url 'index' %}"> Cancel Filter </a>
 </form>
+{% endfor %}
 
 {% for goal in goals %}
     {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
