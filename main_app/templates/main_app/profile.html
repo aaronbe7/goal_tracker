@@ -11,8 +11,8 @@
 <div>
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
-        <br>
+        {{ form.username }}
+        <br><br>
         <button type="submit" class="btn btn-primary">Update Username</button>
     </form>
 </div>

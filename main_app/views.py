@@ -100,13 +100,13 @@ def user_goals(request, user_id):
     return render(request, 'main_app/user_goals.html', { 'lists': lists })
 
 @login_required
-def profile(request):
+def profile(request, user_id):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()
-            return redirect('/user')
+            return redirect('profile', user_id=user_id)
 
     else:
         form = EditProfileForm(instance=request.user)
@@ -129,7 +129,7 @@ def profile_photo(request, user_id):
             Photo.objects.create(url=url,key=key,user_id=user_id)
         except:
             print('An error occurred uploading file to S3')
-    return redirect('profile')
+    return redirect('profile', user_id = user_id)
 
 def delete_user_photo(request, user_id):
     photo = Photo.objects.get(user_id=user_id)

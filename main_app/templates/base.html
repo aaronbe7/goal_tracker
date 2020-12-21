@@ -24,7 +24,7 @@
               <div class="nav-item dropdown">
                 <a id="text-color" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, {{ user.username }}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a id="profile-color" class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                  <a id="profile-color" class="dropdown-item" href="{% url 'profile' user.id %}">Edit Profile</a>
                   <div class="dropdown-divider"></div>
                   <a id="logout-color" class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
                 </div>
@@ -36,13 +36,13 @@
               <a id="text-color" class="nav-link" href="{% url 'signup' %}">Sign Up</a>
               <a id="text-color" class="nav-link" href="{% url 'login' %}">Log In</a>
               {% endif %}
-          </div>
-      </div>
     </nav>
   </header>
   <main class="container">
     {% block content %}
     {% endblock %}
   </main>
+</div>
+</div>
 </body>
 </html>
