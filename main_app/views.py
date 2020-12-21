@@ -14,7 +14,7 @@ from django.urls import reverse
 # import popup_forms <-- could maybe be used on the goal details page to copy and create a new form
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
-BUCKET  = 'catcatcollect' 
+BUCKET  = 'catcollector1205' 
 
 
 # @popup_forms.handler
@@ -126,9 +126,22 @@ def profile_photo(request, user_id):
         try:
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            Photo.objects.create(url=url, user_id=user_id)
+            Photo.objects.create(url=url,key=key,user_id=user_id)
         except:
             print('An error occurred uploading file to S3')
+    return redirect('profile')
+
+def delete_user_photo(request, user_id):
+    photo = Photo.objects.get(user_id=user_id)
+    s3 = boto3.client('s3')
+    try:
+        s3.delete_object(
+            Bucket = BUCKET,
+            Key = photo.key
+        )
+        photo.delete()
+    except:
+        print('An error occurred deleting file on S3')
     return redirect('profile')
 
 @login_required
