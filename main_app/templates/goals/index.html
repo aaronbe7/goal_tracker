@@ -10,6 +10,7 @@
     <div>
         <p>Goal: {{ goal.title }}</p>
     </div>
+{% endfor %}
 <form method="post" action="">
     {% csrf_token %}
     {{form}}
