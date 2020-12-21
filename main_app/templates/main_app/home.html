@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
+
 <div class="center">
-    <h1 class="display-1">Welcome to Goal Tracker</h1>
-    <a href="{% url 'index' %}" class="btn btn-primary">Get Started Here</a>
+    <!-- <img src="{% static 'images/homebanner.png' %}" width="100%"> -->
+
+    <div style="position:relative">    
+        <img src="{% static 'images/goaltracker.gif' %}" width="100%">
+        <div style="position:absolute;left:50%;bottom:0;">
+          <a href="{% url 'index' %}" class="btn btn-primary">Get Started Here</a>
+        </div>
+      </div>
+    <div></div>
+    <img src="{% static 'images/wellhelp.gif' %}" width="100%">
+    <br><br>
+
+    
 </div>
 {% endblock %}
