@@ -7,19 +7,55 @@
 <div class="row">
   <div class="col s6">
     <div class="card">
+    <div class="dropdown">
+          <button 
+            class="btn btn-secondary dropdown-toggle position-absolute" 
+            type="button" 
+            id="dropdownMenuButton" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            style="right: 0px">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+              <a href="{% url 'goallist_update' user.id goal.goallist_set.first.id %}">
+                <button type="button" class="dropdown-item">
+                  Edit
+                </button>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'goallist_delete' user.id goal.goallist_set.first.id %}">
+                <button type="button" class="dropdown-item">
+                  Delete
+                </button>
+              </a>
+            </li>
+          </ul>
+        </div>
       <div class="card-content">
         <p class="card-title">{{ goal.title }}</p>
         <p>Description: {{ goal.description }}</p>
-        {% if goal.goaldate %}
-          <p>Goal Date: {{goal.goaldate}} </p>
-        {% endif %}
         <p>Completed: {{goal.completed}} </p>
-        {% if goal.completiondate %}
-          <p>Completion Date: {{goal.completiondate}} </p>
-        {% endif %}           
+        <p>Goal Date: 
+          {% if goal.goaldate %}
+            {{goal.goaldate}} 
+          {% else %}
+            Not Set
+          {% endif %}
+        </p>
+        <p>Completion Date:
+          {% if goal.completiondate %}
+            {{goal.completiondate}}
+          {% else %}
+            Not Set
+          {% endif %}     
+        </p>      
+        {% if user.id != goal.user.id %}
         <button type="button" class="badge bg-primary rounded-pill" style="float:right" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Copy Goal
-        </button>       
+        </button>    
+        {% endif %}
       </div>
     </div>
   </div>
