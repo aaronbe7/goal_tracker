@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="left">
@@ -9,6 +10,36 @@
     <div>
         <p>Goal: {{ goal.title }}</p>
     </div>
+<form method="post" action="">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Filter!" class="btn btn-primary">
+    <a href="{% url 'index' %}"> Cancel Filter </a>
+</form>
+
+{% for goal in goals %}
+    {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
+    {% if goal.restricted == False %}
+    
+    <a href={% url 'goals_detail' goal.user.id goal.goallist_set.first.id goal.id %}>
+        <div class="card">
+            <div class="card-content">
+                <p>Goal: {{ goal.title }}</p>
+                <p>Date Added: {{ goal.date_added }}</p>
+                <p> Category: 
+                    {% for key, values in CATEGORIES %}
+                        {% for category in goal.category %}
+                            {% if key == category %}
+                              <br> <span style="padding-left: 20px" {{'id='}}{{category}}> - {{ values }} </span> 
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </a>
+    {% endif %}  
+    {% comment %} {% endif %}  {% endcomment %}
 {% endfor %}
 
 {% endblock %}

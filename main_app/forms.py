@@ -5,12 +5,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 class GoalForm(ModelForm):
-    category = forms.MultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple(),
-        choices=CATEGORIES,
-        initial=('0')
-    )
-
     class Meta:
         model = Goal
         fields = '__all__'
@@ -22,4 +16,11 @@ class EditProfileForm(UserChangeForm):
         model = User
         fields =  ('username',)
       
-    
+
+class CategoryFilterForm(ModelForm):
+    category = forms.ChoiceField(
+        choices=CATEGORIES
+    )
+    class Meta:
+        model = Goal
+        fields = ['category']

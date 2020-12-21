@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+import multiselectfield.db.fields
 
 
 class Migration(migrations.Migration):
@@ -20,7 +21,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=150)),
                 ('description', models.TextField(max_length=250)),
-                ('category', models.CharField(max_length=250)),
+                ('category', multiselectfield.db.fields.MultiSelectField(choices=[('oth', 'Others'), ('wor', 'Work/Career'), ('fnc', 'Finance'), ('soc', 'Social'), ('fam', 'Family'), ('int', 'Intellectual'), ('fit', 'Health/Fitness'), ('spi', 'Spiritual'), ('edu', 'Education'), ('adv', 'Travel/Adventure'), ('hob', 'Hobbies')], max_length=43)),
                 ('restricted', models.BooleanField(default=False)),
                 ('completed', models.BooleanField(blank=True, default=False)),
                 ('goaldate', models.DateField(blank=True, null=True, verbose_name='set goal date')),

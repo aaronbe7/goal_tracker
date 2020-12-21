@@ -1,12 +1,12 @@
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import GoalList, Goal, Photo
+from .models import GoalList, Goal, CATEGORIES, Photo 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import GoalForm, EditProfileForm
+from .forms import GoalForm, EditProfileForm, CategoryFilterForm
 from django import forms
 import uuid
 import boto3
@@ -51,20 +51,31 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
         context["form"] = form
         return context
 
-    def goallists_detail(request, goallist_id):
-        goallists = GoalList.objects.get(id=goallist_id)
-        # instantiate FeedingForm to be rendered in the template
-        goals = Goal.objects.get(id=goal_id)
-        return render(request, 'goallist/detail.html', {
-            'goallists': goallist, 'goals': goal
-        })
+    # ---------- I'm commenting this part because this won't work in 
+    # ---------- Class Based Views.
+    # def goallists_detail(request, goallist_id):
+    #     goallists = GoalList.objects.get(id=goallist_id)
+    #     # instantiate FeedingForm to be rendered in the template
+    #     goals = Goal.objects.get(id=goal_id)
+    #     return render(request, 'goallist/detail.html', {
+    #         'goallists': goallist, 'goals': goal
+    #     })
         
 
-def home(request):
+def home(request): 
     return render(request, 'main_app/home.html')
 
 def goals_index(request):
-    return render(request, 'goals/index.html')
+    if request.method == "POST":
+        goals = Goal.objects.filter(category__icontains=request.POST['category'])
+    else: 
+        goals = Goal.objects.all()
+    return render(request, 'goals/index.html', {
+        'goals': goals,
+        'user': request.user,
+        'CATEGORIES': CATEGORIES,
+        'form': CategoryFilterForm
+    })
 
 @login_required
 def user_goals(request, user_id):
@@ -146,13 +157,12 @@ class GoalDetail(LoginRequiredMixin, DetailView):
 
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal
-    fields = '__all__'
+    form_class = GoalForm
     def get_success_url(self):
-            return reverse('goallist_detail', kwargs={
-                'user_id': self.request.user.id,
-                'pk': self.object.goallist_set.first().id
-            })
-    
+        return reverse('goallist_detail', kwargs={
+            'user_id': self.request.user.id,
+            'pk': self.object.goallist_set.first().id
+        })
 
 class GoalDelete(LoginRequiredMixin, DeleteView):
     model = Goal
