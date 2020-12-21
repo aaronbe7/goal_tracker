@@ -14,7 +14,7 @@ from django.urls import reverse
 # import popup_forms <-- could maybe be used on the goal details page to copy and create a new form
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
-BUCKET  = 'catcatcollect' 
+BUCKET  = 'catcollector1205' 
 
 
 # @popup_forms.handler
@@ -126,10 +126,23 @@ def profile_photo(request, user_id):
         try:
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            Photo.objects.create(url=url, user_id=user_id)
+            Photo.objects.create(url=url,key=key,user_id=user_id)
         except:
             print('An error occurred uploading file to S3')
     return redirect('profile', user_id = user_id)
+
+def delete_user_photo(request, user_id):
+    photo = Photo.objects.get(user_id=user_id)
+    s3 = boto3.client('s3')
+    try:
+        s3.delete_object(
+            Bucket = BUCKET,
+            Key = photo.key
+        )
+        photo.delete()
+    except:
+        print('An error occurred deleting file on S3')
+    return redirect('profile')
 
 @login_required
 def add_goal(request, user_id, list_id):
@@ -143,6 +156,25 @@ def add_goal(request, user_id, list_id):
         new_goal.save()
         GoalList.objects.get(id=list_id).goal.add(new_goal)
     return redirect('goallist_detail', user_id = user_id, pk=list_id)
+
+def copy_goal(request):
+    print(request.POST)
+    goal = Goal.objects.get(id=request.POST['goalid'])
+    goallist = GoalList.objects.get(id=request.POST['goallist'])
+    print(goal.user)
+    newGoal = Goal(
+        title = goal.title,
+        description = goal.description,
+        restricted = False,
+        completed = False,
+        category = goal.category,
+        user = request.user
+    )
+    newGoal.save()
+    goallist.goal.add(newGoal)
+    goallist.save()
+
+    return redirect(f'/user/{request.user.id}/goallist/{goallist.id}/')
 
 def signup(request):
   error_message = ''
@@ -167,28 +199,15 @@ class GoalCreate(LoginRequiredMixin, CreateView):
     model = Goal
     fields = '__all__'
 
-class GoalCopyCreate(LoginRequiredMixin, CreateView):
-    model = Goal
-    fields = '__all__'
-    def goal_copy(request, id=None):
-        new_goal = get_object_or_404(Event, id=id)
-        new_goal.pk = None  # autogen a new primary key
-
-        form = GoalCreate(request.POST or None, instance=new_goal)
-
-        if form.is_valid():
-            goal = form.save()
-            messages.success(request, "New goal created")
-            return HttpResponseRedirect(event.get_absolute_url())
-
-        context = {
-            "form": form,
-        }
-        return render(request, "events/event_form.html", context)
-
 class GoalDetail(LoginRequiredMixin, DetailView):
     model = Goal
     template_name = 'goals/detail.html'    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        goallist = GoalList.objects.filter(user=self.request.user)
+        context['goallist'] = goallist
+        return context
 
 class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = Goal

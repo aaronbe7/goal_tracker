@@ -1,25 +1,89 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <h1>Goal Details</h1>
 
 <div class="row">
-    <div class="col s6">
-      <div class="card">
-        <div class="card-content">
-          <p class="card-title">{{ goal.title }}</p>
-          <p>Description: {{ goal.description }}</p>
-          {% if goal.goaldate %}
-            <p>Goal Date: {{goal.goaldate}} </p>
-          {% endif %}
-          <p>Completed: {{goal.completed}} </p>
-          {% if goal.completiondate %}
-            <p>Completion Date: {{goal.completiondate}} </p>
-          {% endif %}                  
+  <div class="col s6">
+    <div class="card">
+    <div class="dropdown">
+          <button 
+            class="btn btn-secondary dropdown-toggle position-absolute" 
+            type="button" 
+            id="dropdownMenuButton" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            style="right: 0px">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+              <a href="{% url 'goallist_update' user.id goal.goallist_set.first.id %}">
+                <button type="button" class="dropdown-item">
+                  Edit
+                </button>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'goallist_delete' user.id goal.goallist_set.first.id %}">
+                <button type="button" class="dropdown-item">
+                  Delete
+                </button>
+              </a>
+            </li>
+          </ul>
         </div>
-        <a href="{% url 'create_goalcopy' %}">
-          <span class="badge bg-primary rounded-pill" style="float:right">Copy Goal</span></a>
-
+      <div class="card-content">
+        <p class="card-title">{{ goal.title }}</p>
+        <p>Description: {{ goal.description }}</p>
+        <p>Completed: {{goal.completed}} </p>
+        <p>Goal Date: 
+          {% if goal.goaldate %}
+            {{goal.goaldate}} 
+          {% else %}
+            Not Set
+          {% endif %}
+        </p>
+        <p>Completion Date:
+          {% if goal.completiondate %}
+            {{goal.completiondate}}
+          {% else %}
+            Not Set
+          {% endif %}     
+        </p>      
+        {% if user.id != goal.user.id %}
+        <button type="button" class="badge bg-primary rounded-pill" style="float:right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Copy Goal
+        </button>    
+        {% endif %}
       </div>
-
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Copy Goal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'create_goalcopy' %}" id="copy_goal">
+          {% csrf_token %}
+          <label for="goallist">Select a List to add: </label>
+          <select name="goallist">
+            {% for list in goallist %}
+              <option value={{list.id}}>{{list.title}}</option>
+            {% endfor %}
+          </select>    
+          <input type="text" name="goalid" class="visually-hidden" value={{goal.id}}>  
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" value="Copy goal!" class="btn btn-primary" form="copy_goal">
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
