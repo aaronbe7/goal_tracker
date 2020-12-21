@@ -21,13 +21,10 @@
     <div class="card-header">
         <div class="text-primary">
             <a href="{% url 'goallist_detail' user.id list.id %}" class="text-primary btn">
-                <h3>{{ list.title }}: {{ list.category }} </h3>
+                <h3>{{ list.title }} </h3>
                  </a>
                 </div>
                 <h6>Description: {{ list.description }}</h6>
-            </div>
-            <div class="card-body">
-                <h6>Goal: {{ list.goals }}</h6>
             </div>
         </div>&nbsp
 {% endfor %}

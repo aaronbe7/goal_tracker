@@ -2,18 +2,13 @@
 {% block content %}
 
 <div class="left">
-<h1 class="display-4">Get Some Inspiration</h1>
+    <h1 class="display-4">Get Some Inspiration</h1>
 </div>
 
-{% for goal in goals %}
-    <a href="{% url 'goal' goal.id %}">
-        <div class="card">
-            <div class="card-content">
-                <p>Goal: {{ goal.name }}</p>
-                <p>Date Added: {{ goal.date_added }}</p>
-            </div>
-        </div>
-    </a>
+{% for goal in goallist.goal.all %}
+    <div>
+        <p>Goal: {{ goal.title }}</p>
+    </div>
 {% endfor %}
 
 {% endblock %}
