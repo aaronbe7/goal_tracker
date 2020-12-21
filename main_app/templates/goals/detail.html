@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>Goal Details</h1>
 
 <div class="row">
@@ -16,7 +17,9 @@
             <p>Completion Date: {{goal.completiondate}} </p>
           {% endif %}                  
         </div>
+        <a href="{% url 'create_goalcopy' %}">
+          <span class="badge bg-primary rounded-pill" style="float:right">Copy Goal</span></a>
 
-    </div>
+      </div>
 
 {% endblock %}
