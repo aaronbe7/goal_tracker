@@ -19,7 +19,8 @@ class EditProfileForm(UserChangeForm):
 
 class CategoryFilterForm(ModelForm):
     category = forms.ChoiceField(
-        choices=CATEGORIES
+        choices=CATEGORIES,
+        
     )
     class Meta:
         model = Goal

@@ -11,9 +11,14 @@
       <h1 class="display-4">Add Goal</h1>
     {% endif %}
   </div>
+
+    {% endif %}
+
+    
   <form action="" method="post">
     {% csrf_token %}
     {{ form|crispy }}
+    
   <input type="submit" value="Submit!" id="spacing" class="btn btn-primary">
   </form>
 

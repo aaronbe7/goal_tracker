@@ -25,7 +25,9 @@ class Goal(models.Model):
     description = models.TextField(max_length=250)
     category = MultiSelectField(
         choices=CATEGORIES,
-        default=('oth')
+        default=('oth'),
+        blank = True,
+        null = False
         )
     restricted = models.BooleanField(default=False) # this may not be the correct syntax, so let me know if you find a better way
     completed = models.BooleanField(default=False, blank=True) # this may not be the correct syntax, so let me know if you find a better way
