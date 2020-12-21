@@ -11,9 +11,26 @@ from django import forms
 import uuid
 import boto3
 from django.urls import reverse
+# import popup_forms <-- could maybe be used on the goal details page to copy and create a new form
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
 BUCKET  = 'catcatcollect' 
+
+
+# @popup_forms.handler
+# def form_view(request):
+#     if request.method == 'POST':
+#         form = ApplyForm(request.post)
+#         if not form.is_valid():
+#             return popup_forms.OpenFormResponse(request, form)
+#         # ...
+#         # ... FORM PROCESSING GOES HERE ...
+#         # ...
+#         return popup_forms.CloseFormResponse(request)
+#     else:
+#         return redirect('failure_url')
+#         # or raise Http404
+#         # or just popup_forms.CloseFormResponse(request)
 
 # Create your views here.
 class CreateGoalList(LoginRequiredMixin, CreateView):
@@ -150,6 +167,24 @@ class GoalCreate(LoginRequiredMixin, CreateView):
     model = Goal
     fields = '__all__'
 
+class GoalCopyCreate(LoginRequiredMixin, CreateView):
+    model = Goal
+    fields = '__all__'
+    def goal_copy(request, id=None):
+        new_goal = get_object_or_404(Event, id=id)
+        new_goal.pk = None  # autogen a new primary key
+
+        form = GoalCreate(request.POST or None, instance=new_goal)
+
+        if form.is_valid():
+            goal = form.save()
+            messages.success(request, "New goal created")
+            return HttpResponseRedirect(event.get_absolute_url())
+
+        context = {
+            "form": form,
+        }
+        return render(request, "events/event_form.html", context)
 
 class GoalDetail(LoginRequiredMixin, DetailView):
     model = Goal

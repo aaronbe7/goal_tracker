@@ -26,6 +26,10 @@
                 </div>
                 <h6>Description: {{ list.description }}</h6>
             </div>
+            <div class="card-body">
+                <h6>Goal: {{ list.goals }}</h6>
+            </div>
+            <input type="text" name="field1" value="{% if request.POST.field1 %}{{ request.POST.field1}}{% endif %}">
         </div>&nbsp
 {% endfor %}
 
