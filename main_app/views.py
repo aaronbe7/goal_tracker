@@ -142,7 +142,7 @@ def delete_user_photo(request, user_id):
         photo.delete()
     except:
         print('An error occurred deleting file on S3')
-    return redirect('profile')
+    return redirect('profile',user_id)
 
 @login_required
 def add_goal(request, user_id, list_id):
