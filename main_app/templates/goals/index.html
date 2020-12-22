@@ -5,44 +5,55 @@
 <div class="left">
     <h1 class="display-4">Get Some Inspiration</h1>
 </div>
+<br>
 
 {% for goal in goallist.goal.all %}
     <div>
         <p>Goal: {{ goal.title }}</p>
     </div>
 {% endfor %}
+
+<h4>Explore goals by other user's by category:</h4>
+
 <form method="post" action="">
     {% csrf_token %}
     {{form}}
-    <input type="submit" value="Filter!" class="btn btn-primary">
-    <a href="{% url 'index' %}"> Cancel Filter </a>
+    <input type="submit" value="Filter" class="btn btn-primary">
+    <a href="{% url 'index' %}"> Remove Filter </a>
 </form>
+<br><br>
 
-
-{% for goal in goals %}
-    {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
+<div class="row">
+   
+    {% for goal in goals %}
     {% if goal.restricted == False %}
-    
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
+    {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
+    <div class="card" style="width: 18rem; padding: 5px 10px 10px 10px;">
         <div class="card-body">
           <h5 class="card-title">{{ goal.title }}</h5>
-          <p class="card-text">{{ goal.description }}</p>
-          <h6>{% for key, values in CATEGORIES %}
+    <p class="card-text">{{ goal.description }}</p>
+    <a href={% url 'goals_detail' goal.user.id goal.goallist_set.first.id goal.id %} class="btn btn-primary">See Details</a>
+  </div>
+  <div class="card-footer bg-transparent border-primary text-secondary">
+      {% for key, values in CATEGORIES %}
             {% for category in goal.category %}
                 {% if key == category %}
-                  <br> <span style="padding-left: 20px" {{'id='}}{{category}}> - {{ values }} </span> </h6>
-     
-          <a href={% url 'goals_detail' goal.user.id goal.goallist_set.first.id goal.id %} class="btn btn-primary">Details</a>
-        </div>
-      </div>
-                    
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
+                  <br><p class="card-text" {{'id='}}{{category}}><small class="text-muted">{{ values }}</small> </p>
+                  {% endif %}
+                  {% endfor %}
+    {% endfor %}</div>
+</div>
 
-    </a>
-    {% endif %}  
-    {% comment %} {% endif %}  {% endcomment %}
-{% endfor %}
+        <!-- if last column in row -->
+        {% if forloop.counter|divisibleby:"4" and not forloop.last %}
+        <div class="row">
+    
+        {% endif %}
+        {% endif %}  
+        {% comment %} {% endif %}  {% endcomment %}
+    {% endfor %}
+
+</div>
+
+
 {% endblock %}
