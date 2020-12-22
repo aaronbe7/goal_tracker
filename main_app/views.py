@@ -11,6 +11,7 @@ from django import forms
 import uuid
 import boto3
 from django.urls import reverse
+from datetime import date
 # import popup_forms <-- could maybe be used on the goal details page to copy and create a new form
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
@@ -157,6 +158,7 @@ def add_goal(request, user_id, list_id):
         GoalList.objects.get(id=list_id).goal.add(new_goal)
     return redirect('goallist_detail', user_id = user_id, pk=list_id)
 
+@login_required
 def copy_goal(request):
     print(request.POST)
     goal = Goal.objects.get(id=request.POST['goalid'])
@@ -173,8 +175,14 @@ def copy_goal(request):
     newGoal.save()
     goallist.goal.add(newGoal)
     goallist.save()
-
     return redirect(f'/user/{request.user.id}/goallist/{goallist.id}/')
+
+def complete_goal(request, user_id, pk):
+    goal = Goal.objects.get(id=pk)
+    goal.completed = True
+    goal.completiondate = date.today()
+    goal.save()
+    return redirect(request.META['HTTP_REFERER'])
 
 def signup(request):
   error_message = ''
