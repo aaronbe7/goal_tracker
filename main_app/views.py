@@ -15,7 +15,7 @@ from datetime import date
 # import popup_forms <-- could maybe be used on the goal details page to copy and create a new form
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
-BUCKET  = 'catcollector1205' 
+BUCKET  = 'catcatcollect' 
 
 
 # @popup_forms.handler
