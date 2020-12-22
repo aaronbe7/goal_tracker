@@ -11,6 +11,7 @@ from django import forms
 import uuid
 import boto3
 from django.urls import reverse
+from datetime import date
 # import popup_forms <-- could maybe be used on the goal details page to copy and create a new form
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/' 
@@ -51,6 +52,9 @@ class GoalListUpdate(LoginRequiredMixin, UpdateView):
 class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
     def get_success_url(self):
+        goallist = GoalList.objects.get(id=self.request.POST['list'])
+        for goal in goallist.goal.all():
+            goal.delete()
         return reverse('user_goals', kwargs={'user_id': self.request.user.id})
 
 class GoalsList(LoginRequiredMixin, ListView):
@@ -157,6 +161,7 @@ def add_goal(request, user_id, list_id):
         GoalList.objects.get(id=list_id).goal.add(new_goal)
     return redirect('goallist_detail', user_id = user_id, pk=list_id)
 
+@login_required
 def copy_goal(request):
     print(request.POST)
     goal = Goal.objects.get(id=request.POST['goalid'])
@@ -173,8 +178,14 @@ def copy_goal(request):
     newGoal.save()
     goallist.goal.add(newGoal)
     goallist.save()
-
     return redirect(f'/user/{request.user.id}/goallist/{goallist.id}/')
+
+def complete_goal(request, user_id, pk):
+    goal = Goal.objects.get(id=pk)
+    goal.completed = True
+    goal.completiondate = date.today()
+    goal.save()
+    return redirect(request.META['HTTP_REFERER'])
 
 def signup(request):
   error_message = ''
@@ -187,7 +198,7 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('goal_list')
+      return redirect('index')
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form

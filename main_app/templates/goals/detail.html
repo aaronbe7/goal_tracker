@@ -18,14 +18,14 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
-              <a href="{% url 'goallist_update' user.id goal.goallist_set.first.id %}">
+              <a href="{% url 'goal_update' user.id goal.id %}">
                 <button type="button" class="dropdown-item">
                   Edit
                 </button>
               </a>
             </li>
             <li>
-              <a href="{% url 'goallist_delete' user.id goal.goallist_set.first.id %}">
+              <a href="{% url 'goal_delete' user.id  goal.id %}">
                 <button type="button" class="dropdown-item">
                   Delete
                 </button>
@@ -56,6 +56,12 @@
           Copy Goal
         </button>    
         {% endif %}
+        {% if goal.completed == False %}
+          <form method="PUT" action="{% url 'goal_complete' user.id goal.id %}">
+            <input type="submit" value="Mark as Complete" class="btn btn-primary">
+          </form>
+        {% endif %}
+        
       </div>
     </div>
   </div>
