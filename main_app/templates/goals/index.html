@@ -20,8 +20,8 @@
 
 {% for goal in goals %}
     {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
+    {% if goal.goallist_set.first.id.restricted == False %}
     {% if goal.restricted == False %}
-    
     <a href={% url 'goals_detail' goal.user.id goal.goallist_set.first.id goal.id %}>
         <div class="card">
             <div class="card-content">
@@ -39,6 +39,7 @@
             </div>
         </div>
     </a>
+    {% endif %}
     {% endif %}  
     {% comment %} {% endif %}  {% endcomment %}
 {% endfor %}
