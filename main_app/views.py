@@ -52,6 +52,9 @@ class GoalListUpdate(LoginRequiredMixin, UpdateView):
 class GoalListDelete(LoginRequiredMixin, DeleteView):
     model = GoalList
     def get_success_url(self):
+        goallist = GoalList.objects.get(id=self.request.POST['list'])
+        for goal in goallist.goal.all():
+            goal.delete()
         return reverse('user_goals', kwargs={'user_id': self.request.user.id})
 
 class GoalsList(LoginRequiredMixin, ListView):
