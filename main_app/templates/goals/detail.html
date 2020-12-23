@@ -45,26 +45,43 @@
 
       <div class="card-content">
         <table>
-          <tr>
-            <div class="card-header bg-white text-dark"><h4>{{ goal.title }}</h4></div>
+          
+            <div class="card-header bg-white text-dark"><h4>{{ goal.title }}</h4>
+              {% if goal.completiondate %}
+              <small class="text-muted" style="padding-left: 15px;">Completed on: {{ goal.completiondate }}</small>
+            {% else %}
+              
+            {% endif %}
+  
+          </div>
 
-             <td style="padding-left: 5%; padding-top: 5%;"><b>Description:</b> {{ goal.description }}
-                <br><br>
+             <td style="padding-left: 5%; padding-top: 2%;" width="45%">
                 <b>Goal Status: </b> 
                 {% if goal.completed == True %}
-                Completed
+                <span class="badge bg-info rounded-pill">Completed!</span>
               {% else %}
                 Not Yet Completed
               {% endif %}
-                <br><br>
+                <br>
                 <b>Date to complete by: </b>
                 {% if goal.goaldate %}
                 {{goal.goaldate}} 
               {% else %}
                 Not Set
-              {% endif %} <br>
+              {% endif %}                          
+              <br>
+              <b>Restricted:</b> {% if goal.restricted == True %}
+              Yes
+            {% else %}
+              No
+            {% endif %}</p>
+              <td style="padding-left: 20px;padding-top:2%;border-left: 1px solid grey;">
+            <h5 class="card-title">Description:</h5> 
+            <p class="card-text">{{ goal.description }}</p>
+              <br>
+            </td>
+            </td>
               {% if user.id != goal.user.id %}
-
         <button type="button" class="badge bg-primary rounded-pill" style="float:right" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Copy and add goal to a list
         </button>    
@@ -105,21 +122,10 @@
     </div>
   </div>
 </div>
-                <br><br>
-                {% for key, values in CATEGORIES %}
-                {% for category in goal.category %}
-                    {% if key == category %}                  
-                      {% endif %}
-                      {% endfor %}
-                {% endfor %}
-                <b>Genre:</b> 
-                <br><br>
-                <b>Categories:</b><p class="card-text" {{'id='}}{{category}}>{{ values }}</p>
-                <br><br>
 
                 
-             </td>
-          </tr>
+  
+         
        </table>
        
 

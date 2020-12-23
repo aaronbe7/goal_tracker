@@ -27,3 +27,4 @@ Pitch-deck: https://docs.google.com/presentation/d/1ngBR0BKo9Oz9fx3WUNXNURBiAzmk
 
 * Users can navigate to other user's pages.
 * Users can share lists and goals with other users.
+* Users can check and uncheck a box to mark a goal as complete or incomplete from the Goal List Detail page.
