@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="left">
+
   <h1 class="display-4">Goal List Details</h1>
 </div>
 
@@ -40,22 +41,49 @@
             </li>
           </ul>
         </div>
-        <div class="card-content">
-          <span class="card-title">{{ goallist.title }}</span>
-          <p>Description: {{ goallist.description }}</p>
+        
+          <div class="card-header bg-white text-dark"><h4>{{ goallist.title }}</h4></div>
+          <div class="card-content" style="padding-top: 15px;">
+            <h6 class="card-title">&nbsp &nbsp Description:</h6> 
+            &nbsp &nbsp &nbsp &nbsp{{ goallist.description }}
+       
+            <hr class="solid">
           {% if goallist.goal.count > 0 %}
 
-            <p>Goals:<br> {% for goal in goallist.goal.all %}
+          <h4 class="card-title"> &nbsp<span style="text-decoration: underline;"> Goals:</span></h5>
+          {% for goal in goallist.goal.all %}
               <ul class="list-group list-group-horizontal">
-              <li class="list-group-item list-group-item-action list-group-item-primary"> 
-                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
-                {{goal}} </a>
-                <a href="{% url 'goal_delete' user.id goal.id %}">
-                  <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
-                <a href="{% url 'goal_update' user.id goal.id %}">
-                  <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
-              </li>
+
+<!-- 
+Trying to add a check/uncheck for completed -->
+                {% if goal.completed %}
+                <li class="list-group-item list-group-item-action list-group-item-light">                 
+
+
+                                <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
+                  {{goal}} </a>  <span class="badge bg-info rounded-pill">Completed!</span>
+                  <a href="{% url 'goal_delete' user.id goal.id %}">
+                    <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
+                  <a href="{% url 'goal_update' user.id goal.id %}">
+                    <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
+                  </tr>
+                </li>
+                {% else %}
+                <li class="list-group-item list-group-item-action list-group-item-primary"> 
+                  <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
+                    {{goal}} </a>
+                    <a href="{% url 'goal_delete' user.id goal.id %}">
+                      <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
+                    <a href="{% url 'goal_update' user.id goal.id %}">
+                      <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
+
+                  </li>
+                {% endif %}
+ <!-- 
+Trying to add a check/uncheck for completed -->       
+
+
+
               </ul>
             {% endfor %}
            </p>

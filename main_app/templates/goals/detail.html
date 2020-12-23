@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% load static %}
+
+
+
 
 <h1>Goal Details</h1>
-
+<br>
 <div class="row">
   <div class="col s6">
     <div class="card">
     <div class="dropdown">
+        {% if user.id == goal.user.id %}
           <button 
             class="btn btn-secondary dropdown-toggle position-absolute" 
             type="button" 
@@ -16,6 +21,7 @@
             aria-expanded="false"
             style="right: 0px">
           </button>
+       
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
               <a href="{% url 'goal_update' user.id goal.id %}">
@@ -32,28 +38,52 @@
               </a>
             </li>
           </ul>
+        {% endif %}
+          
         </div>
+
+
       <div class="card-content">
-        <p class="card-title">{{ goal.title }}</p>
-        <p>Description: {{ goal.description }}</p>
-        <p>Completed: {{goal.completed}} </p>
-        <p>Goal Date: 
-          {% if goal.goaldate %}
-            {{goal.goaldate}} 
-          {% else %}
-            Not Set
-          {% endif %}
-        </p>
-        <p>Completion Date:
-          {% if goal.completiondate %}
-            {{goal.completiondate}}
-          {% else %}
-            Not Set
-          {% endif %}     
-        </p>      
-        {% if user.id != goal.user.id %}
+        <table>
+          
+            <div class="card-header bg-white text-dark"><h4>{{ goal.title }}</h4>
+              {% if goal.completiondate %}
+              <small class="text-muted" style="padding-left: 15px;">Completed on: {{ goal.completiondate }}</small>
+            {% else %}
+              
+            {% endif %}
+  
+          </div>
+
+             <td style="padding-left: 5%; padding-top: 2%;" width="45%">
+                <b>Goal Status: </b> 
+                {% if goal.completed == True %}
+                <span class="badge bg-info rounded-pill">Completed!</span>
+              {% else %}
+                Not Yet Completed
+              {% endif %}
+                <br>
+                <b>Date to complete by: </b>
+                {% if goal.goaldate %}
+                {{goal.goaldate}} 
+              {% else %}
+                Not Set
+              {% endif %}                          
+              <br>
+              <b>Restricted:</b> {% if goal.restricted == True %}
+              Yes
+            {% else %}
+              No
+            {% endif %}</p>
+              <td style="padding-left: 20px;padding-top:2%;border-left: 1px solid grey;">
+            <h5 class="card-title">Description:</h5> 
+            <p class="card-text">{{ goal.description }}</p>
+              <br>
+            </td>
+            </td>
+              {% if user.id != goal.user.id %}
         <button type="button" class="badge bg-primary rounded-pill" style="float:right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Copy Goal
+          Copy and add goal to a list
         </button>    
         {% endif %}
         {% if goal.completed == False %}
@@ -62,6 +92,43 @@
           </form>
         {% endif %}
         
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Copy and add goal to a list</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'create_goalcopy' %}" id="copy_goal">
+          {% csrf_token %}
+          <label for="goallist">Select a List to add: </label>
+          <select name="goallist">
+            {% for list in goallist %}
+              <option value={{list.id}}>{{list.title}}</option>
+            {% endfor %}
+          </select>    
+          <input type="text" name="goalid" class="visually-hidden" value={{goal.id}}>  
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" value="Copy goal!" class="btn btn-primary" form="copy_goal">
+      </div>
+    </div>
+  </div>
+</div>
+
+                
+  
+         
+       </table>
+       
+
       </div>
     </div>
   </div>

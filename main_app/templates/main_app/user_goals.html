@@ -21,16 +21,19 @@
     <div class="card-header">
         <div class="text-primary">
             <a href="{% url 'goallist_detail' user.id list.id %}" class="text-primary btn">
-                <h3>{{ list.title }} </h3>
+                <h3>{{ list.title }} </h3> 
+
+
                  </a>
                 </div>
                 <h6>Description: {{ list.description }}</h6>
+                
             </div>
-            <div class="card-body">
-                <h6>Goal: {{ list.goals }}</h6>
-            </div>
-            <input type="text" name="field1" value="{% if request.POST.field1 %}{{ request.POST.field1}}{% endif %}">
-        </div>&nbsp
+           
+            <button type="button" class="btn btn-primary" width="100%"> <a href="{% url 'goallist_detail' user.id list.id %}">
+                <span class="badge badge-light" style="font-size: 15px;"> Details || Goals {{ list.goal.count }}</span></a>
+              </button>
+  
 {% endfor %}
 
 {% endblock %}

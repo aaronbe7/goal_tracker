@@ -10,6 +10,7 @@ CATEGORIES = (
     ('oth', 'Others'),
     ('wor', 'Work/Career'),
     ('fnc', 'Finance'),
+    ('foo', 'Food'),
     ('soc', 'Social'),
     ('fam', 'Family'),
     ('int', 'Intellectual'),
