@@ -3,6 +3,16 @@ Goal Tracker is an app that helps users manage, create, and stick to their goals
 
 # Screenshots
 
+![home](/main_app/static/images/home.png)
+![signup](/main_app/static/images/signup.png)
+![login](/main_app/static/images/login.png)
+![inspiration](/main_app/static/images/inspiration.png)
+![goallists](/main_app/static/images/goallists.png)
+![goallistdetail](/main_app/static/images/goallistdetail.png)
+![addlist](/main_app/static/images/addlist.png)
+![goaldetail](/main_app/static/images/goaldetail.png)
+![addgoal](/main_app/static/images/addgoal.png)
+
 # Technologies Used
 * Python
 * JavaScript
@@ -17,7 +27,7 @@ Goal Tracker is an app that helps users manage, create, and stick to their goals
 
 # Getting Started
 
-Use Goal Tracker: 
+Use Goal Tracker: http://goal-tracker-django.herokuapp.com/
 
 Trello board: https://trello.com/b/ABDTKD4T/sei-project-3-goal-tracker-team-indecisive
 
