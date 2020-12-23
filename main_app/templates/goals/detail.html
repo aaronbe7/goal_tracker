@@ -47,8 +47,8 @@
         <table>
           <tr>
             <div class="card-header bg-white text-dark"><h4>{{ goal.title }}</h4></div>
-             <td rowspan = "1"><img src="{% static 'images/goaldetail.png' %}" width="100%"></img></td>
-             <td width="75%"><b>Description:</b> {{ goal.description }}
+
+             <td style="padding-left: 5%; padding-top: 5%;"><b>Description:</b> {{ goal.description }}
                 <br><br>
                 <b>Goal Status: </b> 
                 {% if goal.completed == True %}
