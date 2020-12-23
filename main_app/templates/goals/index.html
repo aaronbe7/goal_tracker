@@ -25,6 +25,7 @@
 <div class="row">
    
     {% for goal in goals %}
+    {% if goal.goallist_set.first.id.restricted == False %}
     {% if goal.restricted == False %}
     {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
     <div class="card" style="width: 18rem; padding: 5px 10px 10px 10px;">
@@ -53,7 +54,8 @@
         <div class="row">
     
         {% endif %}
-        {% endif %}  
+        {% endif %} 
+        {% endif %}   
         {% comment %} {% endif %}  {% endcomment %}
     {% endfor %}
 
