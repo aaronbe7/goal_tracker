@@ -241,22 +241,23 @@ class GoalListDetail(LoginRequiredMixin, DetailView):
 
 
 
+# functions to check/uncheck a goal to mark it completed or not. Functions not yet working
 
-def check(request, goallist_id):
-    goallists = GoalList.objects.get(id=goallist_id)
-    goal = Goal.objects.get(id=goal_id)
-    goals.completed = True
-    goal.save()
-    return redirect('goallist/detail.html', {
-        'goallists': goallist, 'goals': goal
-    })
+# def check(request, goallist_id):
+#     goallists = GoalList.objects.get(id=goallist_id)
+#     goal = Goal.objects.get(id=goal_id)
+#     goals.completed = True
+#     goal.save()
+#     return redirect('goallist/detail.html', {
+#         'goallists': goallist, 'goals': goal
+#     })
 
-def uncheck(request, goallist_id):
-    goallists = GoalList.objects.get(id=goallist_id)
-    goal = Goal.objects.get(id=goal_id)
-    goals.completed = False
-    goal.save()
-    return redirect('goallist/detail.html', {
-        'goallists': goallist, 'goals': goal
-    })
+# def uncheck(request, goallist_id):
+#     goallists = GoalList.objects.get(id=goallist_id)
+#     goal = Goal.objects.get(id=goal_id)
+#     goals.completed = False
+#     goal.save()
+#     return redirect('goallist/detail.html', {
+#         'goallists': goallist, 'goals': goal
+#     })
 

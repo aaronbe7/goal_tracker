@@ -57,10 +57,8 @@
 <!-- 
 Trying to add a check/uncheck for completed -->
                 {% if goal.completed %}
-                <li class="list-group-item list-group-item-action list-group-item-light"> 
-                  
-                  <a href="{% url 'check' user.id goal.id %}"><input type="checkbox" aria-label="Checkbox for following text input" checked="true"></a>
-                 
+                <li class="list-group-item list-group-item-action list-group-item-light">                 
+
 
                                 <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
                   {{goal}} </a>  <span class="badge bg-info rounded-pill">Completed!</span>
@@ -72,8 +70,6 @@ Trying to add a check/uncheck for completed -->
                 </li>
                 {% else %}
                 <li class="list-group-item list-group-item-action list-group-item-primary"> 
-                  <a href="{% url 'check' user.id goal.id %}"><input type="checkbox" aria-label="Checkbox for following text input"></a>
-
                   <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
                     {{goal}} </a> {{goal.completed}}
                     <a href="{% url 'goal_delete' user.id goal.id %}">
