@@ -71,7 +71,7 @@ Trying to add a check/uncheck for completed -->
                 {% else %}
                 <li class="list-group-item list-group-item-action list-group-item-primary"> 
                   <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
-                    {{goal}} </a> {{goal.completed}}
+                    {{goal}} </a>
                     <a href="{% url 'goal_delete' user.id goal.id %}">
                       <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
                     <a href="{% url 'goal_update' user.id goal.id %}">
