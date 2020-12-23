@@ -3,15 +3,16 @@ Goal Tracker is an app that helps users manage, create, and stick to their goals
 
 # Screenshots
 
-![home](/main_app/static/images/home.png)
-![signup](/main_app/static/images/signup.png)
-![login](/main_app/static/images/login.png)
-![inspiration](/main_app/static/images/inspiration.png)
-![goallists](/main_app/static/images/goallists.png)
-![goallistdetail](/main_app/static/images/goallistdetail.png)
-![addlist](/main_app/static/images/addlist.png)
-![goaldetail](/main_app/static/images/goaldetail.png)
-![addgoal](/main_app/static/images/addgoal.png)
+![home](main_app/static/images/home.png)
+![signup](main_app/static/images/signup.png)
+![login](main_app/static/images/login.png)
+![profile](main_app/static/images/profile.png)
+![inspiration](main_app/static/images/inspiration.png)
+![addlist](main_app/static/images/addlist.png)
+![goallists](main_app/static/images/goallists.png)
+![goallistdetail](main_app/static/images/goallistdetail.png)
+![addgoal](main_app/static/images/addgoal.png)
+![goaldetail](main_app/static/images/goaldetail.png)
 
 # Technologies Used
 * Python
