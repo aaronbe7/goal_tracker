@@ -47,15 +47,37 @@
 
             <p>Goals:<br> {% for goal in goallist.goal.all %}
               <ul class="list-group list-group-horizontal">
-              <li class="list-group-item list-group-item-action list-group-item-primary"> 
-                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
-                {{goal}} </a>
-                <a href="{% url 'goal_delete' user.id goal.id %}">
-                  <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
-                <a href="{% url 'goal_update' user.id goal.id %}">
-                  <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
-              </li>
+
+<!-- 
+Trying to add a check/uncheck for completed -->
+                {% if goal.completed %}
+                <li class="list-group-item list-group-item-action list-group-item-light"> 
+
+                  </label>                <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
+                  {{goal}} </a>  <span class="badge bg-info rounded-pill">Completed!</span>
+                  <a href="{% url 'goal_delete' user.id goal.id %}">
+                    <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
+                  <a href="{% url 'goal_update' user.id goal.id %}">
+                    <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
+                  </tr>
+                </li>
+                {% else %}
+                <li class="list-group-item list-group-item-action list-group-item-primary"> 
+
+                  <a href={% url 'goals_detail' user.id goallist.id goal.id %}> 
+                    {{goal}} </a> {{goal.completed}}
+                    <a href="{% url 'goal_delete' user.id goal.id %}">
+                      <span class="badge bg-primary rounded-pill" style="float:right">Delete</span></a>
+                    <a href="{% url 'goal_update' user.id goal.id %}">
+                      <span class="badge bg-primary rounded-pill" style="float:right">Edit</span></a>
+
+                  </li>
+                {% endif %}
+ <!-- 
+Trying to add a check/uncheck for completed -->       
+
+
+
               </ul>
             {% endfor %}
            </p>
