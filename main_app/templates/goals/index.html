@@ -38,7 +38,8 @@
       {% for key, values in CATEGORIES %}
             {% for category in goal.category %}
                 {% if key == category %}
-                  <br><p class="card-text" {{'id='}}{{category}}><small class="text-muted">{{ values }}</small> </p>
+                <span class="badge badge-pill badge-info" {{'id='}}{{category}}><small class="text-muted">{{ values }}</small></span>
+                  
                   {% endif %}
                   {% endfor %}
     {% endfor %}</div>
