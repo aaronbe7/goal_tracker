@@ -3,37 +3,28 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-10"> 
-            <div class="left">
-                <h1 class="display-4">Your Goal Lists</h1>
-            </div>
+    <div class="row justify-content-between">
+        <div class="left col-auto"> 
+            <span class="display-4">Your Goal Lists</span>
         </div>
-            <div id="spacing" class="col-2"> 
-                <a href="{% url 'create_goallist' user.id  %}" class="btn btn-primary">New List</a>
-            </div>
+        <div class="d-flex col-auto align-items-center"> 
+            <a href="{% url 'create_goallist' user.id  %}" class="btn btn-primary">New List</a>
         </div>
     </div>
-</div>
 
-{% for list in lists %}
-<div class="card">
-    <div class="card-header">
-        <div class="text-primary">
-            <a href="{% url 'goallist_detail' user.id list.id %}" class="text-primary btn">
+    {% for list in lists %}
+    <div class="card border-2 shadow rounded-2 my-3">
+        <div class="card-header">
+            <div class="text-primary">
                 <h3>{{ list.title }} </h3> 
-
-
-                 </a>
-                </div>
-                <h6>Description: {{ list.description }}</h6>
-                
             </div>
-           
-            <button type="button" class="btn btn-primary" width="100%"> <a href="{% url 'goallist_detail' user.id list.id %}">
-                <span class="badge badge-light" style="font-size: 15px;"> Details || Goals {{ list.goal.count }}</span></a>
-              </button>
-  
-{% endfor %}
-
+            <h6>Description: {{ list.description }}</h6>          
+        </div>
+            
+        <button type="button" class="btn btn-primary" width="100%"> <a href="{% url 'goallist_detail' user.id list.id %}" class="stretched-link">
+            <span class="badge badge-light" style="font-size: 15px;"> Details || Goals {{ list.goal.count }}</span></a>
+        </button>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
