@@ -25,40 +25,31 @@
 <div class="row">
    
     {% for goal in goals %}
-    {% if goal.goallist_set.first.id.restricted == False %}
+    {% if goal.goallist_set.first.restricted == False %}
     {% if goal.restricted == False %}
-    {% comment %} {% if goal.user.id != user.id %} {% endcomment %}
-    <div class="card" style="width: 18rem; padding: 5px 10px 10px 10px;">
+    {% if goal.user.id != user.id %}
+    <div class="card m-3 border-2 shadow rounded" style="width: 18rem; padding: 5px 10px 10px 10px;">
         <div class="card-body">
-          <h5 class="card-title">{{ goal.title }}</h5>
-                   
-    <p class="card-text">{{ goal.description }}</p>
-    <a href={% url 'goals_detail' goal.user.id goal.goallist_set.first.id goal.id %} class="btn btn-primary">See Details</a>
-  </div>
-  <div class="card-footer bg-transparent border-primary text-secondary">
-    <small class="text-muted" style="font-size: 10px;">Goal created by: {{ goal.user.username}}</small><br>
-    <small class="text-muted">Categories:</small>
-      {% for key, values in CATEGORIES %}
-            {% for category in goal.category %}
-                {% if key == category %}
-                <small class="text-muted">{{ values }}</small>
-                
-                  
-                  {% endif %}
-                  {% endfor %}
-    {% endfor %}</div>
-</div>
-
-        <!-- if last column in row -->
-        {% if forloop.counter|divisibleby:"4" and not forloop.last %}
-        <div class="row">
-    
-        {% endif %}
-        {% endif %} 
-        {% endif %}   
-        {% comment %} {% endif %}  {% endcomment %}
+            <h5 class="card-title">{{ goal.title }}</h5>       
+            <p class="card-text">{{ goal.description }}</p>
+            <a href={% url 'goals_detail' goal.user.id goal.goallist_set.first.id goal.id %} class="btn btn-primary">See Details</a>
+        </div>
+        <div div class="card-footer bg-transparent border-primary text-secondary">
+            <small class="text-muted" style="font-size: 10px;">Goal created by: {{ goal.user.username}}</small><br>
+            <small class="text-muted">Categories:</small>
+            {% for key, values in CATEGORIES %}
+                {% for category in goal.category %}
+                    {% if key == category %}
+                        <small class="text-muted">{{ values }},</small>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %} 
+    {% endif %}   
+    {% endif %} 
     {% endfor %}
-
 </div>
 
 
